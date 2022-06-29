@@ -1,0 +1,62 @@
+int main(void)
+
+{
+  int ret;
+  size_t len;
+  long lVar1;
+  undefined8 *puVar2;
+  undefined8 password [14];
+  undefined8 token [6];
+  undefined8 username [12]; 12*88 = 96
+  int len_read;
+  FILE *ret_open;
+  
+  bzero(username, 14);
+  bzero(token, 16);
+  bzero(password, 12);
+  ret_open = (FILE *)0x0;
+  len_read = 0;
+  ret_open = fopen("/home/users/level03/.pass","r");
+  if (ret_open == (FILE *)0x0) {
+    fwrite("ERROR: failed to open password file\n",1,0x24,stderr);
+    exit(1);
+  }
+  len = fread(token,1,0x29,ret_open);
+  len_read = (int)len;
+  len = strcspn((char *)token,"\n");
+  *(undefined *)((long)token + len) = 0;
+  if (len_read != 0x29) { // 41
+    fwrite("ERROR: failed to read password file\n",1,0x24,stderr);
+    fwrite("ERROR: failed to read password file\n",1,0x24,stderr);
+    exit(1);
+  }
+  fclose(ret_open);
+
+
+  puts("===== [ Secure Access System v1.0 ] =====");
+  puts("/***************************************\\");
+  puts("| You must login to access this system. |");
+  puts("\\**************************************/");
+
+  printf("--[ Username: ");
+  fgets((char *)username,100,stdin); // lit 100 chars de stdin
+  len = strcspn((char *)username,"\n");
+  *(undefined *)((long)username + len) = 0; // remplace premier \n par \0
+
+  printf("--[ Password: ");
+  fgets((char *)password,100,stdin); // lit 100 chars de stdin
+  len = strcspn((char *)password,"\n");
+  *(undefined *)((long)password + len) = 0; // remplace premier \n par \0
+
+  puts("*****************************************");
+
+  ret = strncmp((char *)token,(char *)password,0x29); // 41
+  if (ret == 0) {
+    printf("Greetings, %s!\n",username);
+    system("/bin/sh");
+    return 0;
+  }
+  printf((char *)username); // print password+username si je ne mets pas de \0
+  puts(" does not have access!");
+  exit(1);
+}
