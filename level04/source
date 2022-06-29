@@ -1,0 +1,34 @@
+int main(void)
+
+{
+  uint status;
+  int prompt [32];
+  uint local_1c;
+  long ret;
+  __pid_t child;
+  
+  child = fork();
+  bzero(prompt, 32);
+  ret = 0;
+  status = 0;
+  if (child == 0) { // in child
+    prctl(1,1); // send signal 1 to the child when parent is killed
+    ptrace(PTRACE_TRACEME, 0, 0, 0); // Indicate that this process is to be traced by its parent
+    puts("Give me some shellcode, k");
+    gets((char *)prompt);
+  }
+  else { // in parent
+    do {
+      wait(&status); // wait for child to be over
+      if (((status & 127) == 0) ||  // 127 = 01111111
+         (local_1c = status, '\0' < (char)(((byte)status & 127) + 1) >> 1)) {
+        puts("child is exiting...");
+        return 0;
+      }
+      ret = ptrace(PTRACE_PEEKUSER, child, 44, 0);
+    } while (ret != 11);
+    puts("no exec() for you");
+    kill(child,9);
+  }
+  return 0;
+}

