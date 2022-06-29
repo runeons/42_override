@@ -1,0 +1,56 @@
+Idee generale : auth() doit renvoyer 1 pour ouvrir le shell
+
+- des le debut, on remarque que len(login) doit etre ≥ 6
+    - on choisit 6 pour minimiser le travail
+
+- on remarque aussi que pour etre authentifie, il faut que (k == uStack56)
+
+- on remarque que uStack56 est la valeur lue par scanf, transformee en uint (%u)
+    - donc c’est moi qui choisit sa valeur
+
+- alors on tente avec 000000 et on suit l’algorithme
+    - Attention : ‘0’ = 48 = 0x30
+    - on commence donc nos calculs
+
+
+
+buffer[3] = 0x30 // 48 // si tous les buffer sont 0
+'1'
+k = 0x30 ^ 0x1337 + 0x5eeded
+	= 0x1307 + 0x5eeded
+	= 0x5f00f4
+'2'
+j = 0
+k = k + (0x30 ^ k) % 0x539
+	= 0x5f00f4 + (0x5f00c4) % 1337
+	= 0x5f0508
+
+j = 1
+k = 0x5f0508 + (0x5f0538) % 1337
+	= 0x5f0857
+
+j = 2
+k = 0x5f0857 + (0x5f0867) % 1337
+	= 0x5f099c
+
+j = 3
+k = 0x5f099c + (0x5f09ac) % 1337
+	= 0x5f09ac
+
+j = 4
+k = 0x5f09ac + (0x5f099c) % 1337
+	= 0x5f0c26
+
+j = 5
+k = 0x5f0c26 + (0x5f0c16) % 1337
+	= 0x5f111a // 6230298
+
+j = 6
+k = 0x5f111a + (0x5f112a) % 1337
+	= 0x5f15e9 // 6231529
+
+OK !!!
+
+
+Login : 000000
+Serial : 6231529
