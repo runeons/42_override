@@ -2,8 +2,8 @@ int main(void)
 
 {
   uint status;
-  int prompt [32];
-  uint local_1c;
+  int  prompt [32];
+  uint tmp;
   long ret;
   __pid_t child;
   
@@ -21,7 +21,7 @@ int main(void)
     do {
       wait(&status); // wait for child to be over
       if (((status & 127) == 0) ||  // 127 = 01111111
-         (local_1c = status, '\0' < (char)(((byte)status & 127) + 1) >> 1)) {
+         (tmp = status, '\0' < (char)(((byte)status & 127) + 1) >> 1)) {
         puts("child is exiting...");
         return 0;
       }

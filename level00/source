@@ -1,19 +1,19 @@
 int main(void)
 
 {
-  int tab[4];
+  int i;
   
   puts("***********************************");
   puts("* \t     -Level00 -\t\t  *");
   puts("***********************************");
   printf("Password:");
   scanf("%d", tab);
-  if (tab[0] != 5276)
+  if (i != 5276)
     puts("\nInvalid Password!");
   }
   else {
     puts("\nAuthenticated!");
     system("/bin/sh");
   }
-  return (uint)(tab[0] != 5276); 
+  return (i != 5276);
 }

@@ -4,10 +4,10 @@ int main(void)
   int ret;
   size_t len;
   long lVar1;
-  undefined8 *puVar2;
-  undefined8 password [14];
-  undefined8 token [6];
-  undefined8 username [12]; 12*88 = 96
+  int *puVar2;
+  int password [14];
+  int token [6];
+  int username [12];
   int len_read;
   FILE *ret_open;
   
@@ -18,16 +18,16 @@ int main(void)
   len_read = 0;
   ret_open = fopen("/home/users/level03/.pass","r");
   if (ret_open == (FILE *)0x0) {
-    fwrite("ERROR: failed to open password file\n",1,0x24,stderr);
+    fwrite("ERROR: failed to open password file\n", 1, 36, stderr);
     exit(1);
   }
-  len = fread(token,1,0x29,ret_open);
+  len = fread(token, 1, 41,ret_open);
   len_read = (int)len;
   len = strcspn((char *)token,"\n");
-  *(undefined *)((long)token + len) = 0;
-  if (len_read != 0x29) { // 41
-    fwrite("ERROR: failed to read password file\n",1,0x24,stderr);
-    fwrite("ERROR: failed to read password file\n",1,0x24,stderr);
+  token[len] = 0;
+  if (len_read != 41) { // 41
+    fwrite("ERROR: failed to read password file\n", 1, 36, stderr);
+    fwrite("ERROR: failed to read password file\n", 1, 36, stderr);
     exit(1);
   }
   fclose(ret_open);
@@ -41,16 +41,16 @@ int main(void)
   printf("--[ Username: ");
   fgets((char *)username, 100, stdin); // lit 100 chars de stdin
   len = strcspn((char *)username,"\n");
-  *(undefined *)((long)username + len) = 0; // remplace premier \n par \0
+  username[len] = 0;
 
   printf("--[ Password: ");
   fgets((char *)password, 100, stdin); // lit 100 chars de stdin
   len = strcspn((char *)password,"\n");
-  *(undefined *)((long)password + len) = 0; // remplace premier \n par \0
+  password[len] = 0;
 
   puts("*****************************************");
 
-  ret = strncmp((char *)token,(char *)password, 41);
+  ret = strncmp((char *)token, (char *)password, 41);
   if (ret == 0) {
     printf("Greetings, %s!\n",username);
     system("/bin/sh");

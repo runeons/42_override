@@ -1,4 +1,4 @@
-int auth(char *buffer,uint uStack56)
+int auth(char *buffer, uint uStack56)
 
 {
   size_t len;
@@ -9,7 +9,7 @@ int auth(char *buffer,uint uStack56)
   
   len = strcspn(buffer,"\n");
   buffer[len] = '\0'; // cherche le premier \n et coupe avec \0
-  len = strnlen(buffer,0x20);
+  len = strnlen(buffer, 32);
   if ((int)len < 6) {
     i = 1;
   }
@@ -42,7 +42,7 @@ int auth(char *buffer,uint uStack56)
   return i;
 }
 
-int main(int ac,char **av)
+int main(int ac, char **av)
 
 {
   int ret;
@@ -51,12 +51,12 @@ int main(int ac,char **av)
   char buffer [32];
   int i;
   
-  i = *(int *)(in_GS_OFFSET + 0x14);
+  i = *(int *)(in_GS_OFFSET + 20);
   puts("***********************************");
   puts("*\t\tlevel06\t\t  *");
   puts("***********************************");
   printf("-> Enter Login: ");
-  fgets(buffer,0x20,stdin); // prompt 32
+  fgets(buffer, 32, stdin); // prompt 32
   puts("***********************************");
   puts("***** NEW ACCOUNT DETECTED ********");
   puts("***********************************");
@@ -67,7 +67,7 @@ int main(int ac,char **av)
     puts("Authenticated!");
     system("/bin/sh");
   }
-  if (i != *(int *)(in_GS_OFFSET + 0x14)) {
+  if (i != *(int *)(in_GS_OFFSET + 20)) {
     __stack_chk_fail();
   }
   return (uint)(ret != 0);
