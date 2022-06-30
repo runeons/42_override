@@ -7,7 +7,7 @@ int main(void)
   puts("* \t     -Level00 -\t\t  *");
   puts("***********************************");
   printf("Password:");
-  scanf("%d", tab);
+  scanf("%d", i);
   if (i != 5276)
     puts("\nInvalid Password!");
   }

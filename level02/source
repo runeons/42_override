@@ -56,7 +56,7 @@ int main(void)
     system("/bin/sh");
     return 0;
   }
-  printf((char *)username); // print password+username si je ne mets pas de \0
+  printf((char *)username);
   puts(" does not have access!");
   exit(1);
 }

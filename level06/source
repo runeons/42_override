@@ -1,4 +1,4 @@
-int auth(char *buffer, uint uStack56)
+int auth(char *buffer, uint input)
 
 {
   size_t len;
@@ -31,7 +31,7 @@ int auth(char *buffer, uint uStack56)
 '2'
         k = k + ((int)buffer[j] ^ k) % 0x539; // k += buffer[len] ^ k % 1337
       }
-      if (uStack56 == k) { // uStack56 vaut ce que j'envoie dans scanf
+      if (input == k) { // input vaut ce que j'envoie dans scanf
         i = 0;
       }
       else {
@@ -47,7 +47,7 @@ int main(int ac, char **av)
 {
   int ret;
   int in_GS_OFFSET;
-  uint uStack56;
+  uint input;
   char buffer [32];
   int i;
   
@@ -62,7 +62,7 @@ int main(int ac, char **av)
   puts("***********************************");
   printf("-> Enter Serial: ");
   scanf("%u");
-  ret = auth(buffer, uStack56);
+  ret = auth(buffer, input);
   if (ret == 0) { // ret
     puts("Authenticated!");
     system("/bin/sh");
