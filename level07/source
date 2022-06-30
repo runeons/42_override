@@ -1,0 +1,100 @@
+int get_unum(void)
+
+{
+  int t[3];
+  
+  t[0] = 0;
+  fflush(stdout);
+  __isoc99_scanf("%u", t);
+  clear_stdin();
+  return t[0];
+}
+
+int read_number(int *tab)
+
+{
+  int i;
+  
+  printf(" Index: ");
+  i = get_unum();
+  printf(" Number at data[%u] is %u\n", i, tab[i * 4]);
+  return 0;
+}
+
+int store_number(int *tab)
+
+{
+  uint nb;
+  uint index;
+  int ret;
+  
+  printf(" Number: ");
+  nb = get_unum();
+  printf(" Index: ");
+  index = get_unum();
+  if ((index % 3 == 0) || (nb >> 24 == 183)) {
+    puts(" *** ERROR! ***");
+    puts("   This index is reserved for wil!");
+    puts(" *** ERROR! ***");
+    ret = 1;
+  }
+  else {
+	tab[index * 4] = nb
+    ret = 0;
+  }
+  return ret;
+}
+
+int main(int ac,char **argv,char **envp)
+
+{
+  int           i;
+  uint          j;
+  char          *cmd_tmp;
+  int           in_GS_OFFSET;
+  int           number [100];
+  int           ret;
+  int           command;
+  int           check;
+  char          c;
+  
+  check = *(int *)(in_GS_OFFSET + 0x14);
+  ret = 0;
+  command = 0;
+
+  bzero(number, 100)
+  memset(*argv, 0, strlen(*argv));
+  memset(*envp, 0, strlen(*envp));
+  puts(
+      "----------------------------------------------------\n  Welcome to wil\'s crappy number storage service!   \n----------------------------------------------------\n Commands:                                           \n    store - store a number into the data storage    \n    read   - read a number from the data storage     \n    quit  - exit the program                         \n----------------------------------------------------\n   wil has reserved some storage :>                  \n----------------------------------------------------\n"
+      );
+  do {
+    printf("Input command: ");
+    fgets((char *)&command, 20, stdin); // prompt [20]
+    *(undefined *)((int)&ret + strlen(command) + 3) = 0; // coupe commande a (strlen(command) - 1)
+		
+    if (strcmp(command, "store")) {
+      ret = store_number(number);
+    }
+    else {
+      if (strcmp(command, "read")) {
+        ret = read_number(number);
+      }
+      else {
+        if (strcmp(command, "quit")) {
+          if (check == *(int *)(in_GS_OFFSET + 20)) {
+            return 0;
+          }
+          __stack_chk_fail();
+        }
+      }
+    }
+    if (ret == 0) {
+      printf(" Completed %s command successfully\n",&command);
+    }
+    else {
+      printf(" Failed to do %s command\n",&command);
+    }
+    command = 0;
+  } while( true );
+}
