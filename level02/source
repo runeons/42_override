@@ -25,7 +25,7 @@ int main(void)
   len_read = (int)len;
   len = strcspn((char *)token,"\n");
   token[len] = 0;
-  if (len_read != 41) { // 41
+  if (len_read != 41) {
     fwrite("ERROR: failed to read password file\n", 1, 36, stderr);
     fwrite("ERROR: failed to read password file\n", 1, 36, stderr);
     exit(1);

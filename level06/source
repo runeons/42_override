@@ -1,4 +1,4 @@
-int auth(char *buffer, uint input)
+int auth(char *login, uint input)
 
 {
   size_t len;
@@ -7,13 +7,13 @@ int auth(char *buffer, uint input)
   int j;
   uint k;
   
-  len = strcspn(buffer,"\n");
-  buffer[len] = '\0'; // cherche le premier \n et coupe avec \0
-  len = strnlen(buffer, 32);
+  len = strcspn(login,"\n");
+  login[len] = '\0'; // cherche le premier \n et coupe avec \0
+  len = strnlen(login, 32);
   if ((int)len < 6) {
     i = 1;
   }
-  else { // 1) il faut que len(buffer) > 6
+  else { // 1) il faut que len(login) > 6
     ret = ptrace(PTRACE_TRACEME);
     if (ret == -1) {
       puts("\x1b[32m.---------------------------.");
@@ -23,13 +23,13 @@ int auth(char *buffer, uint input)
     }
     else {
 '1'
-      k = ((int)buffer[3] ^ 0x1337) + 0x5eeded; // k = buffer[3] ^ 4919 + 6221293
+      k = ((int)login[3] ^ 0x1337) + 0x5eeded; // k = login[3] ^ 4919 + 6221293
       for (j = 0; j < (int)len; j = j + 1) {
-        if (buffer[j] < ' ') { // il ne faut aucun caractere < ' ' = 32
+        if (login[j] < ' ') { // il ne faut aucun caractere < ' ' = 32
           return 1;
         }
 '2'
-        k = k + ((int)buffer[j] ^ k) % 0x539; // k += buffer[len] ^ k % 1337
+        k = k + ((int)login[j] ^ k) % 0x539; // k += login[len] ^ k % 1337
       }
       if (input == k) { // input vaut ce que j'envoie dans scanf
         i = 0;
@@ -48,7 +48,7 @@ int main(int ac, char **av)
   int ret;
   int in_GS_OFFSET;
   uint input;
-  char buffer [32];
+  char login [32];
   int i;
   
   i = *(int *)(in_GS_OFFSET + 20);
@@ -56,13 +56,13 @@ int main(int ac, char **av)
   puts("*\t\tlevel06\t\t  *");
   puts("***********************************");
   printf("-> Enter Login: ");
-  fgets(buffer, 32, stdin); // prompt 32
+  fgets(login, 32, stdin); // prompt 32
   puts("***********************************");
   puts("***** NEW ACCOUNT DETECTED ********");
   puts("***********************************");
   printf("-> Enter Serial: ");
   scanf("%u");
-  ret = auth(buffer, input);
+  ret = auth(login, input);
   if (ret == 0) { // ret
     puts("Authenticated!");
     system("/bin/sh");

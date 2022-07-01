@@ -25,12 +25,12 @@ void test(int32_t entryNumber, int32_t computedNumber)
 }
 
 
-void decrypt(int32_t entryNumber)
+void decrypt(int32_t computedNumber)
 {
     char cryptedString = "Q}|u`sfg~sf{}|a3"  // 0x757c7d51 + 0x67667360 + 0x7b66737e  + 0x33617c7d
 
     while (cryptedString != '\0');
-        cryptedString[i] = cryptedString[i]^entryNumber; //XOR
+        cryptedString[i] = cryptedString[i]^computedNumber; //XOR
     if (cryptedString == "Congratulations!") 
         system("/bin/sh");
     else 
