@@ -1,0 +1,64 @@
+int main(int argc, char **argv)
+{
+    FILE *backupFile;
+    FILE *argFile;
+    FILE *realFile;
+    char path[100];
+
+    if (argc != 2) {
+        printf("Usage: %s filename\n", *argv);
+    }
+    // open log 
+    backupFile = (FILE *)fopen("./backups/.log", "w");
+    if (backupFile == NULL) {
+        printf("ERROR: Failed to open %s\n", "./backups/.log");
+        exit(1);
+    }
+    // write log
+    log_wrapper(backupFile, "Starting back up: ", argv[1]);
+
+    //open real .pass
+    argFile = fopen(argv[1], "r");
+    if (argFile == NULL) {
+        printf("ERROR: Failed to open %s\n", argv[1]);
+        exit(1);
+    }
+
+    //open ./backups+argv[1]
+    strcpy(path, "./backups");
+    path = strncat("./backups/" + argv[1], 99 - strlen(path) -1);
+    realFile = open(path, 0xc1, 0x1b0);
+
+    if (realFile < 0) //fail
+    {
+        printf("ERROR: Failed to open %s%s\n", "./backups/", argv[1]);
+        exit(1);
+    }
+    else //write into ./backups+argv[1]
+    {
+        char character;
+        while (character = fgetc(argFile != -1) // EOF
+            write(realFile, character, 1);
+    } 
+    //write log
+    log_wrapper(backupFile, "Finished back up ", argv[1]);
+    fclose(argFile);
+    close(realFile);
+    return 0;
+}
+
+
+
+
+void log_wrapper(FILE *file, char *constStr, char **argv1)
+{
+    char *buffer;
+    
+    strcpy(&buffer, constStr);
+    snprintf(buffer[strlen(buffer)], 254 - strlen(buffer), argv1); // 254 - strlen(buffer) buffer = msg + file_name 
+    buffer[strcspn(&buffer, "\n")] = "\0"; // x/s 0x400d4c f replace \n par 0 pour finir la string 
+    fprintf(file, "LOG: %s\n", &buffer);
+
+    return;
+}
+

