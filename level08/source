@@ -2,7 +2,7 @@ int main(int argc, char **argv)
 {
     FILE *backupFile;
     FILE *argFile;
-    FILE *realFile;
+    FILE *newFile;
     char path[100];
 
     if (argc != 2) {
@@ -27,9 +27,9 @@ int main(int argc, char **argv)
     //open ./backups+argv[1]
     strcpy(path, "./backups");
     path = strncat("./backups/" + argv[1], 99 - strlen(path) -1);
-    realFile = open(path, 0xc1, 0x1b0);
+    newFile = open(path, 0xc1, 0x1b0);
 
-    if (realFile < 0) //fail
+    if (newFile < 0) //fail
     {
         printf("ERROR: Failed to open %s%s\n", "./backups/", argv[1]);
         exit(1);
@@ -38,12 +38,12 @@ int main(int argc, char **argv)
     {
         char character;
         while (character = fgetc(argFile != -1) // EOF
-            write(realFile, character, 1);
+            write(newFile, character, 1);
     } 
     //write log
     log_wrapper(backupFile, "Finished back up ", argv[1]);
     fclose(argFile);
-    close(realFile);
+    close(newFile);
     return 0;
 }
 
