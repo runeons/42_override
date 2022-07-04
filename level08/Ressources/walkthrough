@@ -1,0 +1,15 @@
+Idée : exploiter le chemin relatif de .backups
+
+Problème : ne peut pas utiliser gdb car backups + .log appartient à level09
+
+- on veut ouvrir /home/users/level09/.pass
+    => ERROR: Failed to open ./backups//home/users/level09/.pass
+    au moment d'ouvrir + créer backup_file
+    car les dossiers n'existent pas
+    on ne peut pas les créer
+- on effectue donc tout ca dans tmp, puisqu'on y a accès
+
+
+Solution :
+
+cd /tmp; mkdir -p backups/home/users/level09/; ~/level08 /home/users/level09/.pass; cat ./backups/home/users/level09/.pass; cd ~;
