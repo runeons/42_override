@@ -27,7 +27,7 @@ void set_username(SMessage *sMsg) //struct sur rdi dans rbp-0x98
     char buffer[128];
     int i = 0;
 
-    bzero(buffer) //16 x 8 buffer 40?! 
+    bzero(buffer) // 16 x 8 buffer 40?! 
     puts(">: Enter your username");
     printf(">>:");
     fgets(&buffer, 128, stdin);
