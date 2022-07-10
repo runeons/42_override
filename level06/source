@@ -1,11 +1,11 @@
-int auth(char *login, uint input)
+int auth(char *login, uint password)
 
 {
-  size_t len;
-  int i;
-  long ret;
-  int j;
-  uint k;
+  size_t  len;
+  int     i;
+  int     j;
+  uint    k;
+  long    ret;
   
   len = strcspn(login,"\n");
   login[len] = '\0'; // cherche le premier \n et coupe avec \0
@@ -22,16 +22,16 @@ int auth(char *login, uint input)
       i = 1;
     }
     else {
-'1'
+// '1'
       k = ((int)login[3] ^ 0x1337) + 0x5eeded; // k = login[3] ^ 4919 + 6221293
       for (j = 0; j < (int)len; j = j + 1) {
         if (login[j] < ' ') { // il ne faut aucun caractere < ' ' = 32
           return 1;
         }
-'2'
+// '2'
         k = k + ((int)login[j] ^ k) % 0x539; // k += login[len] ^ k % 1337
       }
-      if (input == k) { // input vaut ce que j'envoie dans scanf
+      if (password == k) { // password vaut ce que j'envoie dans scanf
         i = 0;
       }
       else {
@@ -45,13 +45,10 @@ int auth(char *login, uint input)
 int main(int ac, char **av)
 
 {
-  int ret;
-  int in_GS_OFFSET;
-  uint input;
-  char login [32];
-  int i;
+  char  login[32];
+  uint  password;
+  int   ret;
   
-  i = *(int *)(in_GS_OFFSET + 20);
   puts("***********************************");
   puts("*\t\tlevel06\t\t  *");
   puts("***********************************");
@@ -61,14 +58,11 @@ int main(int ac, char **av)
   puts("***** NEW ACCOUNT DETECTED ********");
   puts("***********************************");
   printf("-> Enter Serial: ");
-  scanf("%u");
-  ret = auth(login, input);
+  scanf("%u", password);
+  ret = auth(login, password);
   if (ret == 0) { // ret
     puts("Authenticated!");
     system("/bin/sh");
   }
-  if (i != *(int *)(in_GS_OFFSET + 20)) {
-    __stack_chk_fail();
-  }
-  return (uint)(ret != 0);
+  return (ret != 0);
 }

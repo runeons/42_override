@@ -1,27 +1,27 @@
 int main(void)
 
 {
-  uint status;
-  int  prompt [32];
-  uint tmp;
-  long ret;
-  __pid_t child;
-  
+  uint  status;
+  char  prompt[128];
+  uint  tmp;
+  long  ret;
+  pid_t child;
+
   child = fork();
-  bzero(prompt, 32);
+  bzero(prompt, 128);
   ret = 0;
   status = 0;
   if (child == 0) { // in child
     prctl(1,1); // send signal 1 to the child when parent is killed
     ptrace(PTRACE_TRACEME, 0, 0, 0); // Indicate that this process is to be traced by its parent
     puts("Give me some shellcode, k");
-    gets((char *)prompt);
+    gets(prompt);
   }
   else { // in parent
     do {
       wait(&status); // wait for child to be over
       if (((status & 127) == 0) ||  // 127 = 01111111
-         (tmp = status, '\0' < (char)(((byte)status & 127) + 1) >> 1)) {
+         (tmp = status, '\0' < (char)(((char)status & 127) + 1) >> 1)) {
         puts("child is exiting...");
         return 0;
       }

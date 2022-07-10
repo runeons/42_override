@@ -20,3 +20,8 @@ Comprenons maintenant la logique :
 - modifie le hash en y appliquant un XOR avec la diff
 
 - effectivement, pour chaque caractère, diff XOR "Qu}|`sfg~sf{}|a3" donne "Congratulations!"
+
+
+=======================================================================================================================================
+
+(python -c 'print "322424827"'; echo 'cat /home/users/level04/.pass') | ./level03

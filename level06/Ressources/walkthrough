@@ -3,9 +3,9 @@ Idee generale : auth() doit renvoyer 1 pour ouvrir le shell
 - des le debut, on remarque que len(login) doit etre ≥ 6
     - on choisit 6 pour minimiser le travail
 
-- on remarque aussi que pour etre authentifie, il faut que (k == uStack56)
+- on remarque aussi que pour etre authentifie, il faut que (k == password)
 
-- on remarque que uStack56 est la valeur lue par scanf, transformee en uint (%u)
+- on remarque que password est la valeur lue par scanf, transformee en uint (%u)
     - donc c’est moi qui choisit sa valeur
 
 - alors on tente avec 000000 et on suit l’algorithme
@@ -54,3 +54,8 @@ OK !!!
 
 Login : 000000
 Serial : 6231529
+
+
+=======================================================================================================================================
+
+(python -c 'print "000000\n6231529"'; echo 'cat /home/users/level07/.pass') | ./level06

