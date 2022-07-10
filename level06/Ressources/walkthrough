@@ -1,4 +1,4 @@
-Idee generale : auth() doit renvoyer 1 pour ouvrir le shell
+Idée générale : auth() doit renvoyer 1 pour ouvrir le shell
 
 - des le debut, on remarque que len(login) doit etre ≥ 6
     - on choisit 6 pour minimiser le travail

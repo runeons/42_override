@@ -39,12 +39,12 @@ int main(void)
   puts("\\**************************************/");
 
   printf("--[ Username: ");
-  fgets((char *)username, 100, stdin); // lit 100 chars de stdin
+  fgets((char *)username, 100, STDIN_FILENO); // lit 100 chars de stdin
   len = strcspn((char *)username,"\n");
   username[len] = 0;
 
   printf("--[ Password: ");
-  fgets((char *)password, 100, stdin); // lit 100 chars de stdin
+  fgets((char *)password, 100, STDIN_FILENO); // lit 100 chars de stdin
   len = strcspn((char *)password,"\n");
   password[len] = 0;
 

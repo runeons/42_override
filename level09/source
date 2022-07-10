@@ -3,7 +3,7 @@ void secret_backdoor(void)
 {
   char buffer [128];
   
-  fgets(buffer,0x80,stdin);
+  fgets(buffer, 128, STDIN_FILENO);
   system(buffer);
   return;
 }
@@ -16,7 +16,7 @@ void set_msg(char *buffer)
   bzero(message, 1024);
   puts(">: Msg @Unix-Dude");
   printf(">>: ");
-  fgets(message, 1024, stdin);
+  fgets(message, 1024, STDIN_FILENO);
   strncpy(buffer, message, (long)buffer[180]); // buffer[180] est donc un nombre (length) (le 41eme caractere du message)
   return;
 }
@@ -29,7 +29,7 @@ void set_username(long buffer)
   bzero(username, 128);
   puts(">: Enter your username");
   printf(">>: ");
-  fgets(username, 128, stdin);
+  fgets(username, 128, STDIN_FILENO);
   for (i = 0; (i < 41 && (username[i] != '\0')); i = i + 1) {
     buffer[140 + i] = username[i];
   }

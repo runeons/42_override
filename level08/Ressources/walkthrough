@@ -1,4 +1,4 @@
-Idée : exploiter le chemin relatif de .backups
+Idée générale : exploiter le chemin relatif de .backups poour gagner les droits de créer une copie
 
 Problème : ne peut pas utiliser gdb car backups + .log appartient à level09
 

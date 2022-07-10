@@ -1,4 +1,4 @@
-Idée : exploiter une for loop qui incrémente une fois de trop pour modifier la length d'un strncpy et réécrire ou l'on veut
+Idée générale : exploiter une for loop qui incrémente une fois de trop pour modifier la length d'un strncpy et réécrire ou l'on veut
 
 
 On comprend que dans la mémoire, à partir de buffer, on a :

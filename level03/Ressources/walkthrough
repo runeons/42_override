@@ -1,4 +1,4 @@
-Idée : trouver le mot de passe qui permet d'ouvrir un shell
+Idée générale : trouver le mot de passe qui permet d'ouvrir un shell
 
 1)  on remarque très vite que la différence entre 322424845 et l'input doit être <= 21 et > 0
     on a donc :

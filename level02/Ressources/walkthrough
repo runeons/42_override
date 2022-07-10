@@ -1,4 +1,4 @@
-Idee generale : le token est lu des le debut, donc stocké quelque part => il s'agit d'aller le lire (en utilisant le printf final)
+Idée générale : le token est lu dès le début, donc stocké quelque part => il s'agit d'aller le lire (en utilisant le printf final)
 
 A noter :
     - le fichier est en 64-bits
@@ -27,3 +27,8 @@ A noter :
         4868373452506E75 51397361354A4145 58674E5743717A37 7358476E68354A35 4D394B6650673348
     - en ASCII, ca donne :
         Hh74RPnuQ9sa5JAEXgNWCqz7sXGnh5J5M9KfPg3H
+
+
+=========================================================================================================================================================
+
+(python -c 'print "tess" + "\n" + "Hh74RPnuQ9sa5JAEXgNWCqz7sXGnh5J5M9KfPg3H"'; echo 'cat /home/users/level03/.pass') | ./level02

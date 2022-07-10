@@ -1,4 +1,4 @@
-Idée : exploiter un fgets avec buffer trop long pour réeécrire EIP et appeler un shellcode en variable d'environnement
+Idée générale : exploiter un fgets avec buffer trop long pour réeécrire EIP et appeler un shellcode en variable d'environnement
 
 - on remarque assez vite que l'username doit être dat_will
 - on remarque que le fgets du password accepte 100 caractères alors que le buffer n'est qque de 64 caractères

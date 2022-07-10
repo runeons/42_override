@@ -1,2 +1,8 @@
-gdb ./level00
-disas main
+Idée générale : envoyer le bon nombre pour ouvrir un shell directement
+
+- on lance gdb et dans le main on regarde le cmp
+
+
+=========================================================================================================================================================
+
+(python -c 'print "5276"'; echo 'cat /home/users/level01/.pass') | ./level00

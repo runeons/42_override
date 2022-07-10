@@ -1,4 +1,4 @@
-Idée : exploiter un gets dans le child (qui n'a pas de limite par rapport à fgets) poour réécrire EIP
+Idée générale : exploiter un gets dans le child (qui n'a pas de limite par rapport à fgets) poour réécrire EIP
 
 
 - on remarque un PTRACE_TRACEME - qui empeche d'executer les execve ulterieurs (SIGTRAP)

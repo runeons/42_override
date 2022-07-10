@@ -53,7 +53,7 @@ int main(int ac, char **av)
   puts("*\t\tlevel06\t\t  *");
   puts("***********************************");
   printf("-> Enter Login: ");
-  fgets(login, 32, stdin); // prompt 32
+  fgets(login, 32, STDIN_FILENO); // prompt 32
   puts("***********************************");
   puts("***** NEW ACCOUNT DETECTED ********");
   puts("***********************************");
