@@ -14,7 +14,6 @@ Alors que la taille allouée à username est 40
 En modifiant length, on peut donc réécrire aussi loin qu'on veut à partir de buffer (max 1024)
 
 
-
 réécrire l'EIP de handle_msg situé après 200 caractères
 
 

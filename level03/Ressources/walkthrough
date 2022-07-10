@@ -1,54 +1,22 @@
-On arrive sur un niveau qui attends un mot de passe :
+Idée : trouver le mot de passe qui permet d'ouvrir un shell
 
-level03@OverRide:~$ ./level03
-***********************************
-*		level03		**
-***********************************
-Password:password
+1)  on remarque très vite que la différence entre 322424845 et l'input doit être <= 21 et > 0
+    on a donc :
+            1 <= diff   <= 22
+    322424844 <= input  <= 322424824
+    
+2) on peut tester ces possibilités, 322424827 fonctionne !
 
-Invalid Password
+Comprenons maintenant la logique :
 
-En regardant l'assembleur on voit que le main appele une fonction test avec en parametre notre entree et le chiffre 322424845.
+- decrypt() prépare une suite de caractères : 
+757c7d51 = u|}Q  EN LITTLE ENDIAN  Qu}|
+67667360 = gfs`                    `sfg
+7b66737e = {fs~                    ~sf{
+33617c7d = 3a|}
 
-Cette fonction appele une fonction decrypt qui prends en parametre:
-- 322424845 - notre entree  si le resultat est >= 0 && < 22
-- un chiffre random sinon.
+==> hash = "Qu}|`sfg~sf{}|a3"
 
-La fonction decrypt va essayer de decrypter la string "Q}|u`sfg~sf{}|a3".
+- modifie le hash en y appliquant un XOR avec la diff
 
-On veut que le resultat du decryptage soit "Congratulations!".
-
-On voit dans l'assembleur un appel a xor, en fait pour chacun des charactere de la string cryptée le programme fait un xor avec le parametre de la fonction.(le nombre entre 0 et 22)
-
-Deux possibilites, calculer ce nombre, ou essayer directement les combinaisons entre 322424845 et 322424824
-
-322424827 fonctionne ! 
-
-Pour calculer,  on sait que 
-"Q}|u`sfg~sf{}|a3" devient 
-"Congratulations!" 
-
-XOR : 
-a   = 0 1 0 1
-b   = 0 1 1 0
-a^b = 0 0 1 1
-
-
-Q       = 01010001
-X       = xxxxxxxx
-Q^X = C = 01000011
-X       = 00010010 
-X       = 18
-
-322424845 - 18 = 322424827;
-
-level03@OverRide:~$ ./level03
-***********************************
-*		level03		**
-***********************************
-Password:322424827
-$ cat /home/users/level04/.pass
-kgv3tkEb9h2mLkRsPkXRfc2mHbjMxQzvb2FrgKkf
-
-Source: https://www.rapidtables.com/convert/number/binary-to-decimal.html 
-http://arsene.perez-mas.pagesperso-orange.fr/langc/operateurs/operateurs.htm
+- effectivement, pour chaque caractère, diff XOR "Qu}|`sfg~sf{}|a3" donne "Congratulations!"

@@ -1,38 +1,49 @@
-int main(int argc, char* argv)
+int decrypt(int diff)
 {
-    int32_t entryNumber;
-    
-    srand (time (0));
-    puts ("(***********************************);");
-    puts ("*\t\tlevel03\t\t**");
-    puts ("(***********************************);");
-    entryNumber = scanf(argv[1]);
-    test(entryNumber, 0x1337d00d); //322424845
-    return (0);
+  int   ret;
+  int   i;
+  char  *hash;
+  char  *tmp;
+
+  hash = "Qu}|`sfg~sf{}|a3";
+  strcpy(tmp, hash);
+  i = 0;
+  while (tmp && tmp[i])
+  {
+    hash[i] = diff ^ tmp[i];
+    i++;
+  }
+  if (strncmp(&hash, "Congratulations!", 17)) {
+   ret = system("/bin/sh");
+  }
+  else {
+    ret = puts("\nInvalid Password");
+  }
 }
 
-
-void test(int32_t entryNumber, int32_t computedNumber)
+void test(int input, int number)
 {
-    int32_t seed;
-    
-    computedNumber = computedNumber - entryNumber;
-    seed = rand();
-    if (computedNumber < 22)
-        decrypt(computedNumber);
-    else
-        decrypt(seed);
+  int diff;
+
+  diff = (number - input);
+  if (diff < 0 || diff > 21)
+    diff = rand();
+  decrypt(diff);
+  return;
 }
 
-
-void decrypt(int32_t computedNumber)
+int main(void)
 {
-    char cryptedString = "Q}|u`sfg~sf{}|a3"  // 0x757c7d51 + 0x67667360 + 0x7b66737e  + 0x33617c7d
-
-    while (cryptedString != '\0');
-        cryptedString[i] = cryptedString[i]^computedNumber; //XOR
-    if (cryptedString == "Congratulations!") 
-        system("/bin/sh");
-    else 
-        puts("Invalid Password");
+  uint seed;
+  int input;
+  
+  seed = time((time_t *)0x0);
+  srand(seed);
+  puts("***********************************");
+  puts("*\t\tlevel03\t\t**");
+  puts("***********************************");
+  printf("Password:");
+  scanf("%d", input);
+  test(input, 0x1337d00d); // 322424845
+  return 0;
 }
