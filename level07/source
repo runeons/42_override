@@ -4,8 +4,8 @@ int get_unum(void)
   int t[3];
   
   t[0] = 0;
-  fflush(stdout);
-  __isoc99_scanf("%u", t);
+  fflush(STDOUT_FILENO);
+  scanf("%u", t);
   clear_stdin();
   return t[0];
 }
@@ -48,17 +48,16 @@ int store_number(int *tab)
 int main(int ac,char **argv,char **envp)
 
 {
-  int           i;
-  uint          j;
-  char          *cmd_tmp;
-  int           in_GS_OFFSET;
-  int           number [100];
-  int           ret;
-  int           command;
-  int           check;
-  char          c;
+  int     i;
+  uint    j;
+  char    *cmd_tmp;
+  int     in_GS_OFFSET;
+  int     number [100];
+  int     ret;
+  int     command;
+  int     check;
   
-  check = *(int *)(in_GS_OFFSET + 0x14);
+  check = *(int *)(in_GS_OFFSET + 20);
   ret = 0;
   command = 0;
 
@@ -71,7 +70,7 @@ int main(int ac,char **argv,char **envp)
   do {
     printf("Input command: ");
     fgets((char *)&command, 20, STDIN_FILENO); // prompt [20]
-    *(undefined *)((int)&ret + strlen(command) + 3) = 0; // coupe commande a (strlen(command) - 1)
+    *(char *)((int)&ret + strlen(command) + 3) = 0; // coupe commande a (strlen(command) - 1)
 		
     if (strcmp(command, "store")) {
       ret = store_number(number);
@@ -83,7 +82,7 @@ int main(int ac,char **argv,char **envp)
       else {
         if (strcmp(command, "quit")) {
           if (check == *(int *)(in_GS_OFFSET + 20)) {
-            return 0;
+            return (0);
           }
           __stack_chk_fail();
         }

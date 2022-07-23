@@ -39,8 +39,8 @@ void set_username(long buffer)
 
 void handle_msg(void)
 {
-  char buffer[140];
-  undefined4 length;
+  char  buffer[140];
+  int   length;
 
   length = 140;
   *(buffer + 180) = 140; // length du strncpy qui suit

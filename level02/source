@@ -1,15 +1,12 @@
 int main(void)
-
 {
-  int ret;
-  size_t len;
-  long lVar1;
-  int *puVar2;
-  int password [14];
-  int token [6];
-  int username [12];
-  int len_read;
-  FILE *ret_open;
+  int     ret;
+  size_t  len;
+  char    password[112];
+  char    token[48];
+  char    username[96];
+  int     len_read;
+  FILE    *ret_open;
   
   bzero(username, 14);
   bzero(token, 16);
@@ -18,7 +15,7 @@ int main(void)
   len_read = 0;
   ret_open = fopen("/home/users/level03/.pass","r");
   if (ret_open == (FILE *)0x0) {
-    fwrite("ERROR: failed to open password file\n", 1, 36, stderr);
+    fwrite("ERROR: failed to open password file\n", 1, 36, STDERR_FILENO);
     exit(1);
   }
   len = fread(token, 1, 41,ret_open);
@@ -26,8 +23,8 @@ int main(void)
   len = strcspn((char *)token,"\n");
   token[len] = 0;
   if (len_read != 41) {
-    fwrite("ERROR: failed to read password file\n", 1, 36, stderr);
-    fwrite("ERROR: failed to read password file\n", 1, 36, stderr);
+    fwrite("ERROR: failed to read password file\n", 1, 36, STDERR_FILENO);
+    fwrite("ERROR: failed to read password file\n", 1, 36, STDERR_FILENO);
     exit(1);
   }
   fclose(ret_open);
